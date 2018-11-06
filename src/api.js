@@ -1,6 +1,6 @@
 //API calls
 
-const getPokemonList = () => {
+const getPromiseFromApi = () => {
     return fetch('http://localhost:3000/pokemon')
        .then(response => response.json())
 }

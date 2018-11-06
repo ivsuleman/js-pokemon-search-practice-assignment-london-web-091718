@@ -2,6 +2,7 @@
 const elPokelistDiv = document.querySelector("#pokemon-container");
 const elSearchInput = document.querySelector("#pokemon-search-input");
 const searchValue = '';
+let pokemonListApi = []; //empty array just in case nothing is returned from API call
 
 //2.render a single pokemon
 const renderPokemon = (pokemon) => {
@@ -64,7 +65,7 @@ elSearchInput.addEventListener('keyup', event => {
   //2.using search value we want to update the list. 
     //Test in console POKEMON[1].name.includes('ven')
     //Change search terms to lower case
-  const pokemonListFiltered = POKEMON.filter(pokemon => pokemon.name.toLowerCase().includes(searchValue.toLowerCase()))
+  const pokemonListFiltered = pokemonListApi.filter(pokemon => pokemon.name.toLowerCase().includes(searchValue.toLowerCase()))
 
   //3.render pokemons
   updateRenderPokemon(pokemonListFiltered);
@@ -72,5 +73,12 @@ elSearchInput.addEventListener('keyup', event => {
 
 
 //Run
-// const pokemonList = getPokemonList();
-updateRenderPokemon(POKEMON)  // page will display all pokemon when refreshed.
+
+//unwrap promise to get the list in array form
+getPromiseFromApi()
+  .then(pokemonList => {
+    pokemonListApi = pokemonList
+    updateRenderPokemon(pokemonList)
+  })
+
+// updateRenderPokemon(pokemonListFromApi)  // page will display all pokemon when refreshed.
